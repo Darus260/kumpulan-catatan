@@ -64,13 +64,13 @@ jobs:
         run: gradle assembleDebug
 
       - name: Ubah Nama File APK
-        run: mv app/build/outputs/apk/debug/app-debug.apk "${{ github.event.inputs.appName }}.apk"
+        run: mv app/build/outputs/apk/debug/app-debug.apk app-release.apk
 
       - name: Buat Direct Link Download (Release)
         uses: softprops/action-gh-release@v2
         with:
           tag_name: ${{ github.event.inputs.buildTag }}
           name: ${{ github.event.inputs.appName }} APK
-          files: "${{ github.event.inputs.appName }}.apk"
+          files: app-release.apk
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
