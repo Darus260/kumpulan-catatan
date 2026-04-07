@@ -10,33 +10,48 @@ import androidx.appcompat.app.AppCompatActivity;
 public class MainActivity extends AppCompatActivity {
     
     private String targetUrl = "https://google.com";
+    private WebView webView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        WebView webView = findViewById(R.id.webView);
+        webView = findViewById(R.id.webView);
         
         WebSettings webSettings = webView.getSettings();
         webSettings.setJavaScriptEnabled(true);
-        webSettings.setDomStorageEnabled(true);
-        webSettings.setDatabaseEnabled(true); // Tambahan untuk memori database
         
-        // --- KODE BARU: MENYIMPAN SESI LOGIN (COOKIES) ---
+        // 1. Mengaktifkan Penyimpanan Lokal (Sangat penting untuk website modern)
+        webSettings.setDomStorageEnabled(true);
+        webSettings.setDatabaseEnabled(true);
+        
+        // 2. Mengaktifkan Cookie & Third-Party Cookie
         CookieManager cookieManager = CookieManager.getInstance();
         cookieManager.setAcceptCookie(true);
         cookieManager.setAcceptThirdPartyCookies(webView, true);
-        // --------------------------------------------------
 
         webView.setWebViewClient(new WebViewClient());
         webView.loadUrl(targetUrl);
     }
 
+    // --- FUNGSI BARU: PAKSA SIMPAN LOGIN SAAT APLIKASI DI-MINIMIZE ---
+    @Override
+    protected void onPause() {
+        super.onPause();
+        CookieManager.getInstance().flush();
+    }
+
+    // --- FUNGSI BARU: PAKSA SIMPAN LOGIN SAAT APLIKASI DITUTUP PAKSA ---
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        CookieManager.getInstance().flush();
+    }
+
     @Override
     public void onBackPressed() {
-        WebView webView = findViewById(R.id.webView);
-        if (webView.canGoBack()) {
+        if (webView != null && webView.canGoBack()) {
             webView.goBack();
         } else {
             super.onBackPressed();
