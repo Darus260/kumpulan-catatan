@@ -32,8 +32,11 @@ public class MainActivity extends AppCompatActivity {
         WebSettings webSettings = webView.getSettings();
         webSettings.setJavaScriptEnabled(true);
         
+        // --- PAKSA AMBIL DATA BARU, JANGAN PAKAI CACHE LAMA ---
+        webSettings.setCacheMode(WebSettings.LOAD_NO_CACHE);
+        
         // --- KONFIGURASI PENYIMPANAN UNIVERSAL MAKSIMAL ---
-        webSettings.setDomStorageEnabled(true); // Wajib untuk localStorage Frontend
+        webSettings.setDomStorageEnabled(true); // Wajib untuk localStorage Frontend (Sesi Login Aman)
         webSettings.setDatabaseEnabled(true);
         webSettings.setAllowFileAccess(true);
         webSettings.setAllowContentAccess(true);
