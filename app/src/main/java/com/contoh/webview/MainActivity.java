@@ -28,6 +28,9 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         webView = findViewById(R.id.webView);
+
+        // --- JURUS PAMUNGKAS: Bersihkan sisa cache lama setiap aplikasi baru dibuka ---
+        webView.clearCache(true);
         
         WebSettings webSettings = webView.getSettings();
         webSettings.setJavaScriptEnabled(true);
