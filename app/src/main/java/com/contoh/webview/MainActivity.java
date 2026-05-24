@@ -46,15 +46,15 @@ public class MainActivity extends AppCompatActivity {
         webSettings.setGeolocationEnabled(true);
         
         // Memaksa WebView mengizinkan pertukaran data lintas domain (CORS)
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-            webSettings.setAllowUniversalAccessFromFileURLs(true);
-            webSettings.setAllowFileAccessFromFileURLs(true);
-        }
+       // if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+       //     webSettings.setAllowUniversalAccessFromFileURLs(true);
+       //     webSettings.setAllowFileAccessFromFileURLs(true);
+       // }
         
         // Mengizinkan konten campuran (HTTP dan HTTPS)
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            webSettings.setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW);
-        }
+       // if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+       //     webSettings.setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW);
+       // }
         
         // Memaksa sistem menerima semua jenis Cookie
         CookieManager cookieManager = CookieManager.getInstance();
