@@ -59,12 +59,22 @@ jobs:
         with:
           gradle-version: '8.4'
 
-      - name: Build APK
-        run: gradle assembleDebug
 
-      # PERUBAHAN: Kembali menggunakan nama aplikasi untuk nama file
-      - name: Ubah Nama File APK
-        run: mv app/build/outputs/apk/debug/app-debug.apk "${{ github.event.inputs.appName }}.apk"
+      - name: Build APK (Release Mode)
+        run: gradle assembleRelease
+
+      - name: Sign APK (Tanda Tangani APK secara otomatis)
+        uses: r0adkll/sign-android-release@v1
+        id: sign_app
+        with:
+          releaseDirectory: app/build/outputs/apk/release
+          signingKeyBase64: ${{ secrets.KEYSTORE_BASE64 }}
+          alias: ${{ secrets.KEY_ALIAS }}
+          keyStorePassword: ${{ secrets.STORE_PASSWORD }}
+          keyPassword: ${{ secrets.KEY_PASSWORD }}
+
+      - name: Ubah Nama File APK yang Sudah Ditandatangani
+        run: mv ${{steps.sign_app.outputs.signedReleaseFile}} "${{ github.event.inputs.appName }}.apk"
 
       - name: Buat Direct Link Download (Release)
         uses: softprops/action-gh-release@v2
