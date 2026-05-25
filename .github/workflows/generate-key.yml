@@ -13,7 +13,7 @@ jobs:
           base64 -w 0 release-key.jks > keystore_base64.txt
 
       - name: Download Hasil Base64
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: Hasil-Base64
           path: keystore_base64.txt
