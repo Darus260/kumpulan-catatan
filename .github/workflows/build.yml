@@ -72,7 +72,8 @@ jobs:
           alias: ${{ secrets.KEY_ALIAS }}
           keyStorePassword: ${{ secrets.STORE_PASSWORD }}
           keyPassword: ${{ secrets.KEY_PASSWORD }}
-          buildToolsVersion: 34.0.0
+        env:
+          BUILD_TOOLS_VERSION: "34.0.0"
 
       - name: Ubah Nama File APK yang Sudah Ditandatangani
         run: mv ${{steps.sign_app.outputs.signedReleaseFile}} "${{ github.event.inputs.appName }}.apk"
